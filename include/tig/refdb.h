@@ -25,7 +25,8 @@ struct ref {
 	enum reference_type type;
 	char id[SIZEOF_REV];	/* Commit SHA1 ID */
 	unsigned int valid:1;	/* Is the ref still valid? */
-	char name[1];		/* Ref name; tag or head names are shortened. */
+	char *name;
+	char full_name[1];	/* Ref name; tag or head names are shortened. */
 };
 
 #define is_initial_commit()	(!get_ref_head())

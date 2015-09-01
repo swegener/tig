@@ -1,0 +1,50 @@
+#!/bin/sh
+
+. libtest.sh
+. libgit.sh
+
+steps '
+	:view-refs
+	:save-display refs.screen
+'
+
+test_setup_work_dir()
+{
+    git_clone 'repo-one' .
+    git checkout -b origin/master origin/master
+    git_commit -m "test duplicate ref names"
+}
+
+test_tig
+
+assert_equals 'refs.screen' <<EOF
+                               All references                                   
+2009-02-13 23:31 Committer     origin/master  test duplicate ref names          
+2010-04-07 05:37 Max Power     master         Commit 10 E                       
+2010-04-07 05:37 Max Power     origin/master  Commit 10 E                       
+2010-04-07 05:37 Max Power     origin/HEAD    Commit 10 E                       
+2009-12-17 12:49 René Lévesque v1.0           Commit 8 B                        
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+[refs] All references                                                       100%
+EOF

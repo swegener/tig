@@ -67,7 +67,7 @@ read_repo_info(char *name, size_t namelen, char *value, size_t valuelen, void *d
 			const char *head = name + STRING_SIZE("refs/heads/");
 
 			string_ncopy(repo.head, head, strlen(head) + 1);
-			add_ref(repo.head_id, name, repo.remote, repo.head);
+			add_ref(repo.head_id, name, repo.remote, name);
 		}
 		state->argv++;
 	}

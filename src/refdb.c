@@ -23,7 +23,7 @@
 static struct ref *refs_head = NULL;
 static size_t refs_tags;
 
-DEFINE_STRING_MAP(refs_by_name, struct ref *, name, 32)
+DEFINE_STRING_MAP(refs_by_name, struct ref *, full_name, 32)
 DEFINE_STRING_MAP(refs_by_id, struct ref *, id, 16)
 
 int
@@ -185,6 +185,7 @@ add_to_refs(const char *id, size_t idlen, char *name, size_t namelen, struct ref
 	struct ref *ref = NULL;
 	enum reference_type type = REFERENCE_BRANCH;
 	void **ref_slot = NULL;
+	const char* full_name = name;
 
 	if (!prefixcmp(name, "refs/tags/")) {
 		type = REFERENCE_TAG;
@@ -215,6 +216,7 @@ add_to_refs(const char *id, size_t idlen, char *name, size_t namelen, struct ref
 		id	= name + strlen("refs/replace/");
 		idlen	= namelen - strlen("refs/replace/");
 		name	= "replaced";
+		full_name = name;
 		namelen	= strlen(name);
 
 	} else if (!prefixcmp(name, "refs/heads/")) {
@@ -240,17 +242,18 @@ add_to_refs(const char *id, size_t idlen, char *name, size_t namelen, struct ref
 		ref = string_map_remove(&refs_by_id, id);
 
 	} else {
-		ref_slot = string_map_put_to(&refs_by_name, name);
+		ref_slot = string_map_put_to(&refs_by_name, full_name);
 		if (!ref_slot)
 			return ERROR_OUT_OF_MEMORY;
 		ref = *ref_slot;
 	}
 
 	if (!ref) {
-		ref = calloc(1, sizeof(*ref) + namelen);
+		ref = calloc(1, sizeof(*ref) + strlen(full_name));
 		if (!ref)
 			return ERROR_OUT_OF_MEMORY;
-		strncpy(ref->name, name, namelen);
+		strncpy(ref->full_name, full_name, strlen(full_name));
+		ref->name = ref->full_name + (name - full_name);
 		if (ref_slot)
 			*ref_slot = ref;
 	}
