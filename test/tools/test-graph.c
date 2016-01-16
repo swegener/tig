@@ -41,11 +41,14 @@ print_symbol(void *__, const struct graph *graph, const struct graph_symbol *sym
 	return false;
 }
 
+FILE *graph_log;
+
 static void
 print_commit(struct graph *graph, struct commit *commit, const char *title)
 {
 	graph->foreach_symbol(graph, &commit->canvas, print_symbol, NULL);
 	printf(" %s\n", title);
+	fprintf(graph_log, "%s\n", title);
 }
 
 int
@@ -73,6 +76,8 @@ main(int argc, const char *argv[])
 
 	if (!io_open(&io, "%s", ""))
 		die("IO");
+
+	graph_log = fopen("/tmp/graph", "w");
 
 	while (!io_eof(&io)) {
 		for (; io_get(&io, &buf, '\n', true); ) {

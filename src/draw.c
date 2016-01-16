@@ -430,6 +430,8 @@ draw_graph(struct view *view, const struct graph *graph, const struct graph_canv
 	return draw_text(view, LINE_DEFAULT, " ");
 }
 
+FILE *graph_log;
+
 static bool
 draw_commit_title(struct view *view, struct view_column *column,
 		  const struct graph *graph, const struct graph_canvas *graph_canvas,
@@ -438,6 +440,10 @@ draw_commit_title(struct view *view, struct view_column *column,
 	if (graph && graph_canvas && column->opt.commit_title.graph &&
 	    draw_graph(view, graph, graph_canvas))
 		return true;
+	if (graph && graph_canvas && column->opt.commit_title.graph && graph_log) {
+		fprintf(graph_log, "%s\n", commit_title);
+		fflush(graph_log);
+	}
 	if (draw_refs(view, column, refs))
 		return true;
 	return draw_text_overflow(view, commit_title, LINE_DEFAULT,

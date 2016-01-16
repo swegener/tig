@@ -110,6 +110,8 @@ static const char *intern_string(const char *str)
 	return *result;
 }
 
+FILE *graph_log;
+
 struct id_color {
 	char *id;
 	size_t color;
@@ -256,6 +258,11 @@ static void
 done_graph(struct graph *graph_ref)
 {
 	struct graph_v2 *graph = graph_ref->private;
+
+	if (graph_log) {
+		fclose(graph_log);
+		graph_log = NULL;
+	}
 
 	free(graph);
 
@@ -1218,6 +1225,36 @@ graph_foreach_symbol(const struct graph *graph, const struct graph_canvas *canva
 
 		if (fn(data, graph, symbol, color_id, i == 0))
 			break;
+
+		if (graph_log) {
+			fprintf(graph_log, symbol->commit ? "1" : "0");
+			fprintf(graph_log, symbol->boundary ? "1" : "0");
+			fprintf(graph_log, symbol->initial ? "1" : "0");
+			fprintf(graph_log, symbol->merge ? "1" : "0");
+
+			fprintf(graph_log, symbol->continued_down ? "1" : "0");
+			fprintf(graph_log, symbol->continued_up ? "1" : "0");
+			fprintf(graph_log, symbol->continued_right ? "1" : "0");
+			fprintf(graph_log, symbol->continued_left ? "1" : "0");
+			fprintf(graph_log, symbol->continued_up_left ? "1" : "0");
+
+			fprintf(graph_log, symbol->parent_down ? "1" : "0");
+			fprintf(graph_log, symbol->parent_right ? "1" : "0");
+
+			fprintf(graph_log, symbol->below_commit ? "1" : "0");
+			fprintf(graph_log, symbol->flanked ? "1" : "0");
+			fprintf(graph_log, symbol->next_right ? "1" : "0");
+			fprintf(graph_log, symbol->matches_commit ? "1" : "0");
+
+			fprintf(graph_log, symbol->shift_left ? "1" : "0");
+			fprintf(graph_log, symbol->continue_shift ? "1" : "0");
+			fprintf(graph_log, symbol->below_shift ? "1" : "0");
+
+			fprintf(graph_log, symbol->new_column ? "1" : "0");
+			fprintf(graph_log, symbol->empty ? "1" : "0");
+
+			fprintf(graph_log, " %s ", graph_symbol_to_utf8(symbol) + (i == 0));
+		}
 	}
 }
 
@@ -1242,6 +1279,10 @@ init_graph_v2(void)
 	api->symbol_to_ascii = graph_symbol_to_ascii;
 	api->symbol_to_utf8 = graph_symbol_to_utf8;
 	api->symbol_to_chtype = graph_symbol_to_chtype;
+
+	char *log = getenv("TIG_GRAPH_LOG");
+	if (log)
+		graph_log = fopen(log, "w");
 
 	return api;
 }
