@@ -175,6 +175,9 @@ static const struct enum_map_entry commit_order_arg_map[] = {
 	ENUM_ARG(COMMIT_ORDER_DATE,		"--date-order"),
 	ENUM_ARG(COMMIT_ORDER_AUTHOR_DATE,	"--author-date-order"),
 	ENUM_ARG(COMMIT_ORDER_REVERSE,		"--reverse"),
+	/* The following act as tig-only command line options */
+	ENUM_ARG(COMMIT_ORDER_AUTO,		"--auto-order"),
+	ENUM_ARG(COMMIT_ORDER_DEFAULT,		"--default-order"),
 };
 
 const char *
