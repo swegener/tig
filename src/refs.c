@@ -128,6 +128,9 @@ refs_open_visitor(void *data, const struct ref *ref)
 	bool is_all = ref == refs_all;
 	struct line *line;
 
+	if (ref->type == REFERENCE_REFLOG)
+		return true;
+
 	line = add_line_alloc(view, &reference, LINE_DEFAULT, 0, is_all);
 	if (!line)
 		return false;

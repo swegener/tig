@@ -252,6 +252,9 @@ update_options_from_argv(const char *argv[])
 			continue;
 		}
 
+		if (!strcmp(flag, "--reflog"))
+			opt_load_reflog = true;
+
 		argv[flags_pos++] = flag;
 	}
 

@@ -232,6 +232,9 @@ add_to_refs(const char *id, size_t idlen, char *name, size_t namelen, struct ref
 		type = REFERENCE_HEAD;
 	}
 
+	if (strchr(name, '@'))
+		type = REFERENCE_REFLOG;
+
 	/* If we are reloading or it's an annotated tag, replace the
 	 * previous SHA1 with the resolved commit id; relies on the fact
 	 * git-ls-remote lists the commit id of an annotated tag right
@@ -315,6 +318,10 @@ reload_refs(bool force)
 		"git", "show-ref", "--head", "--dereference", NULL
 	};
 	char ls_remote_cmd[SIZEOF_STR];
+	const char *reflog_argv[SIZEOF_ARG] = {
+		"git", "log", "--walk-reflogs", "--pretty=format:%H %gD",
+		"HEAD", "--all", NULL,
+	};
 	struct ref_opt opt = { repo.remote, repo.head, WATCH_NONE };
 	struct repo_info old_repo = repo;
 	enum status_code code;
@@ -345,6 +352,13 @@ reload_refs(bool force)
 	code = io_run_load(ls_remote_argv, " \t", read_ref, &opt);
 	if (code != SUCCESS)
 		return code;
+
+	if (opt_load_reflog) {
+		code = io_run_load(reflog_argv, " ", read_ref, &opt);
+		if (code != SUCCESS) {
+			return code;
+		}
+	}
 
 	string_map_foreach(&refs_by_name, cleanup_refs, &opt);
 
