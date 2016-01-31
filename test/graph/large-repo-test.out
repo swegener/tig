@@ -180,8 +180,8 @@
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ │ │ │ │ │ ● DAC module added
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ │ │ │ │ ● DAC support on board.c
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ │ │ │ ● dac support added in Board.c
-│ │ │ │ │ │ │ │ │ │ │ │ ●─│─│─│─│─│─│─│─│─│─│─│─╭─╯─│─┤   Merge branch 'callbacks' of git://github.com/ernesto-g/micropython into ernesto-g-callbacks
-│ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ ● ExtInt example
+│ │ │ │ │ │ │ │ │ │ │ │ ●─│─│─│─│─│─│─│─│─│─│─│─╭─╯─│─╯ │ Merge branch 'callbacks' of git://github.com/ernesto-g/micropython into ernesto-g-callbacks
+│ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ ●─╯ ExtInt example
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ●─╯ README modified
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ● ExtInt methods added
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ● ExtInt module added
@@ -7008,8 +7008,8 @@
 ●─│─╮ Merge pull request #192 from pfalcon/arrays
 │ │ ● Add skeleton implementation of array.array and bytearray.
 ● │ │ Add source file name and line number to error messages.
-●─┤   Merge branch 'master' of github.com:micropython/micropython
-│ ● Add testcase for subclassing builtin type and calling native method (broken).
+●─╯ │ Merge branch 'master' of github.com:micropython/micropython
+│ ●─╯ Add testcase for subclassing builtin type and calling native method (broken).
 ● │ Improve method lookup in mp_obj_class_lookup.
 ●─╯ Implement framework for class-defined built-in operators.
 ●─╮ Merge pull request #191 from pfalcon/store-item

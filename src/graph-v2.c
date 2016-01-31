@@ -480,7 +480,7 @@ graph_remove_collapsed_columns(struct graph_v2 *graph)
 		if (commit_is_in_row(row->columns[i].id, &graph->parents) && !graph_column_has_commit(&graph->prev_row.columns[i]))
 			continue;
 
-		if (row->columns[i - 1].id != graph->prev_row.columns[i - 1].id || graph->prev_row.columns[i - 1].symbol.shift_left) {
+		if ((row->columns[i - 1].id != graph->prev_row.columns[i - 1].id && graph->prev_row.columns[i - 1].id != graph->id) || graph->prev_row.columns[i - 1].symbol.shift_left) {
 			if (graph_log) {
 				fprintf(graph_log, "id col %d this %.40s prev %.40s\n", i - 1, row->columns[i - 1].id, graph->prev_row.columns[i - 1].id);
 				fprintf(graph_log, "shifting left %d %.40s %d %.40s\n", i, row->columns[i].id, i + 1, row->columns[i + 1].id);
