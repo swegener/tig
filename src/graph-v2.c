@@ -321,6 +321,9 @@ graph_insert_column(struct graph_v2 *graph, struct graph_row *row, size_t pos, c
 	column->id = id;
 	column->symbol.boundary = !!graph->is_boundary;
 
+	if (graph_log)
+		fprintf(graph_log, "%s parent %.40s size %d\n", graph->id, id, (int) row->size);
+
 	return column;
 }
 
@@ -368,6 +371,9 @@ static bool
 graph_collapse(struct graph_v2 *graph)
 {
 	while (graph_needs_collapsing(graph)) {
+		if (graph_log)
+			fprintf(graph_log, "collapsing\n");
+
 		graph->prev_row.size--;
 		graph->row.size--;
 		graph->next_row.size--;
@@ -404,6 +410,9 @@ graph_insert_parents(struct graph_v2 *graph)
 	struct graph_row *parents = &graph->parents;
 	int i;
 
+	if (graph_log)
+		fprintf(graph_log, "inserting parents %d %d\n", (int) graph->row.size, (int) parents->size);
+
 	for (i = 0; i < parents->size; i++) {
 		struct graph_column *new = &parents->columns[i];
 
@@ -411,11 +420,21 @@ graph_insert_parents(struct graph_v2 *graph)
 			size_t match = graph_find_free_column(next_row);
 
 			if (match == next_row->size && graph_column_has_commit(&next_row->columns[next_row->size - 1])) {
+				if (graph_log)
+					fprintf(graph_log, "commit new %d %.40s\n", i, new->id);
+
 				graph_insert_column(graph, next_row, next_row->size, new->id);
 				graph_insert_column(graph, row, row->size, NULL);
 				graph_insert_column(graph, prev_row, prev_row->size, NULL);
 			} else {
+				if (graph_log)
+					fprintf(graph_log, "commit copy %d %.40s\n", i, new->id);
+
 				next_row->columns[match] = *new;
+			}
+		} else {
+			if (graph_log) {
+				fprintf(graph_log, "no commit %d\n", i);
 			}
 		}
 	}
@@ -442,6 +461,9 @@ graph_remove_collapsed_columns(struct graph_v2 *graph)
 	struct graph_row *row = &graph->next_row;
 	int i;
 
+	if (graph_log)
+		fprintf(graph_log, "collapsing %d %.40s\n", (int) row->size, graph->id);
+
 	for (i = row->size - 1; i > 0; i--) {
 		if (i == graph->position)
 			continue;
@@ -459,6 +481,11 @@ graph_remove_collapsed_columns(struct graph_v2 *graph)
 			continue;
 
 		if (row->columns[i - 1].id != graph->prev_row.columns[i - 1].id || graph->prev_row.columns[i - 1].symbol.shift_left) {
+			if (graph_log) {
+				fprintf(graph_log, "id col %d this %.40s prev %.40s\n", i - 1, row->columns[i - 1].id, graph->prev_row.columns[i - 1].id);
+				fprintf(graph_log, "shifting left %d %.40s %d %.40s\n", i, row->columns[i].id, i + 1, row->columns[i + 1].id);
+			}
+
 			if (i + 1 >= row->size)
 				memset(&row->columns[i], 0, sizeof(row->columns[i]));
 			else
@@ -507,6 +534,9 @@ static void
 graph_commit_next_row(struct graph_v2 *graph)
 {
 	int i;
+
+	if (graph_log)
+		fprintf(graph_log, "graph_commit_next_row %d\n", (int) graph->row.size);
 
 	for (i = 0; i < graph->row.size; i++) {
 		graph->prev_row.columns[i] = graph->row.columns[i];
