@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Graph test:
+
+. libtest.sh
+
+test_graph < "$source_dir/$test.in"
+
+assert_equals stdout < "$source_dir/$test.out"
+
+grep -v -q -w FAIL .test-result
