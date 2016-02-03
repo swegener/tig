@@ -875,9 +875,6 @@ graph_symbol_vertical_merge(const struct graph_symbol *symbol)
 	if (symbol->shift_left && symbol->continued_up_left)
 		return false;
 
-	if (symbol->next_right)
-		return false;
-
 	if (!symbol->matches_commit)
 		return false;
 

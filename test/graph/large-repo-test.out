@@ -180,7 +180,7 @@
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ │ │ │ │ │ ● DAC module added
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ │ │ │ │ ● DAC support on board.c
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ │ │ │ ● dac support added in Board.c
-│ │ │ │ │ │ │ │ │ │ │ │ ●─│─│─│─│─│─│─│─│─│─│─│─╭─╯─│─╯ │ Merge branch 'callbacks' of git://github.com/ernesto-g/micropython into ernesto-g-callbacks
+│ │ │ │ │ │ │ │ │ │ │ │ ●─│─│─│─│─│─│─│─│─│─│─│─╭─╯─│─┤ │ Merge branch 'callbacks' of git://github.com/ernesto-g/micropython into ernesto-g-callbacks
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ╭─╯ ●─╯ ExtInt example
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ●─╯ README modified
 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ ● ExtInt methods added
@@ -4289,7 +4289,7 @@
 │ │ │ │ │ │ │ ● py: Add further checks for failed malloc in lexer init functions.
 │ │ │ │ │ │ │ ●─╮ Merge branch 'lexer-crash' of https://github.com/dhylands/micropython into dhylands-lexer-crash
 │ │ │ │ │ │ │ │ ● Make lexer fail gracefully when memory can't be allocated.
-●─│─│─│─│─┼─│─╯ │ Merge branch 'dhylands-memory-error'
+●─│─│─│─│─┼─│─┤ │ Merge branch 'dhylands-memory-error'
 │ │ │ │ │ ● │ ╭─╯ py: Add #if guard around gc-specific code.
 │ │ │ │ │ ● │ │ Allow real memory errors (from locked gc) to be reported with traceback.
 ●─│─│─│─│─┴─┴─╯ travis: Install realpath, required for teensy build.
@@ -5106,7 +5106,7 @@
 │ │ │ │ │ ● Remove tests that fail under CPython 3.5
 │ │ │ │ │ ● Add PEP 393-flags to strings and stub usage.
 │ │ │ │ │ ● Replace assert(0) with a self-documenting TODO string
-●─│─┼─┴─╯ │ Merge pull request #653 from Metallicow/switch-example-correction
+●─│─┼─┴─┤ │ Merge pull request #653 from Metallicow/switch-example-correction
 │ │ ● ╭───╯ remove `__doc__ =` and fix tweak doc diffs
 ●─│─│─┤ Merge pull request #650 from bvernoux/master
 │ │ │ ●─╮ Merge branch 'master' of https://github.com/micropython/micropython
@@ -7008,7 +7008,7 @@
 ●─│─╮ Merge pull request #192 from pfalcon/arrays
 │ │ ● Add skeleton implementation of array.array and bytearray.
 ● │ │ Add source file name and line number to error messages.
-●─╯ │ Merge branch 'master' of github.com:micropython/micropython
+●─┤ │ Merge branch 'master' of github.com:micropython/micropython
 │ ●─╯ Add testcase for subclassing builtin type and calling native method (broken).
 ● │ Improve method lookup in mp_obj_class_lookup.
 ●─╯ Implement framework for class-defined built-in operators.
@@ -7263,7 +7263,7 @@
 │ │ │ │ │ ● │ │ ╭───╯ Implements list.reverse; fixes issue #66
 │ │ │ │ │ │ │ │ │ ●─╮ Merge b31b1df514510d18c00b3d681e4eb71f8f89cc23 into 8137b004b004d8e3a594eab90afccb72b779273a
 │ │ │ │ │ │ │ │ │ │ ●─╮ Merge remote-tracking branch 'upstream/master' into list_remove
-●─│─│─│─┴─│─│─┴─│─╯ │ │ Merge branch 'list_remove' of git://github.com/chipaca/micropython into chipaca-list_remove
+●─│─│─│─┴─│─│─┴─│─┤ │ │ Merge branch 'list_remove' of git://github.com/chipaca/micropython into chipaca-list_remove
 │ │ │ │ ●─│─│─╭───┬─╯ │ Merge remote-tracking branch 'upstream/master' into list_remove
 │ │ │ │ ●─╯ │ │ ╭─╯ ╭─╯ Implements list.remove (in terms of list.index and list.pop).
 ●─│─│─│─│─╭─╯─│─│─┬─╯ Merge pull request #92 from chipaca/list_insert
