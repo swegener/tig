@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Graph test:
+
+. libtest.sh
+
+test_graph <<EOF
+commit A B C
+    Commit A - merge B and C
+commit C B D
+    Commit C - merge B and D
+commit D E
+    Commit D - after E
+commit B F E
+    Commit B - merge F and E
+commit E F
+    Commit E - after F
+commit F
+    Commit F
+EOF
+
+assert_equals stdout <<EOF
+●─╮ Commit A - merge B and C
+│ ●─╮ Commit C - merge B and D
+│ │ ● Commit D - after E
+●─┤   Commit B - merge F and E
+│ ● Commit E - after F
+◎─╯ Commit F
+EOF
